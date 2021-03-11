@@ -1,27 +1,165 @@
 'use strict';
-const MAX_LENGTH = 140;
 
-const getRandomInt = (a, b) => {
-  const min = Math.ceil(Math.min(a, b));
-  const max = Math.floor(Math.max(a, b));
-  // * Another solution
-  // const min = Math.ceil((a < b) ? a : b);
-  // const max = Math.floor((a >= b) ? a : b);
-
-  if (min < 0) {
-    return NaN;
-  }
-
-  return Math.floor(Math.random() * (max - min + 1) + min);
+// const MAX_LENGTH = 140;
+const Comments = {
+  NUMBER: 15,
+  ID_MIN: 1,
+  ID_MAX: 35,
 };
 
-getRandomInt(1, -15);
+const CommentMessage = {
+  MIN_LENGTH: 1,
+  MAX_LENGTH: 2,
+  NUMBER: 5,
+};
 
-const checkStringLength = (string, MAX_LENGTH) => string.length <= MAX_LENGTH;
+const AvatarPhotoNumber = {
+  MIN: 1,
+  MAX: 6,
+};
 
-let hello = 'Добрый день!';
-let idioms = 'It’s always darkest before the dawn; It takes two to tango; Through thick and thin; You can lead a horse to water, but you can’t make him drink';
+const Photos = {
+  NUMBER: 25,
+  ID_MIN: 1,
+  ID_MAX:25,
+};
+
+const Likes = {
+  MIN: 15,
+  MAX: 200,
+}
+
+const tempMessages = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+];
 
 
-checkStringLength(idioms, MAX_LENGTH);
-checkStringLength(hello, MAX_LENGTH);
+const tempDescriptionss = [
+  'Мы в походе в горы',
+  'Отличный день на природе',
+  'Стандартные офисные будни',
+  'День рождение моей дочери',
+  'Рядовой обход в больнице',
+]
+
+
+const names = ['Вася', 'Nik', 'Stella', 'Мария', 'Александр']
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+};
+
+
+const checkStringLength = (string, length) => string.length <= length;
+checkStringLength;// for ESLint Validation
+
+//Создает массив из уникальных чисел в указанном диапазоне указанной длины
+const getUniqueRandomNumbers = (length, min, max) => {
+  let arr = [];
+  while (arr.length < length) {
+    const number = getRandomInt(min, max);
+    if (arr.indexOf(number) === -1) arr.push(number);
+  }
+  // console.log(arr);
+  return arr;
+}
+
+// Функция возвращающает случайное значение из массива
+const getRandomArrayElement = (array) => {
+  const randomNumber = Math.floor(Math.random() * array.length);
+  return array[randomNumber];
+};
+
+const CommentMessageLength = getRandomInt(CommentMessage.MIN_LENGTH, CommentMessage.MAX_LENGTH);
+
+const getRandomMessages = (array, length) => {
+  let messages = [];
+  for (let i = 0; i < length; i++) {
+    messages.push(getRandomArrayElement(array));
+  }
+  // return messages;
+  return messages.join(' ');
+}
+
+const generateRandomComments = () => {
+  const ids = getUniqueRandomNumbers(Comments.NUMBER, Comments.ID_MIN, Comments.ID_MAX);
+  let comments = [];
+  for (let i = 0; i < CommentMessage.NUMBER; i++) {
+    comments.push({
+      id: ids[i],
+      avatar: `img/avatar${getRandomInt(AvatarPhotoNumber.MIN, AvatarPhotoNumber.MAX)}.svg`,
+      message: getRandomMessages(tempMessages, CommentMessageLength),
+      name: getRandomArrayElement(names),
+    });
+  }
+  return comments;
+}
+
+
+// функция создает объекты с фото и помещает их в массив
+let generateRandomPhotos = () => {
+  let photos = [];
+  const ids = getUniqueRandomNumbers(Photos.NUMBER, Photos.ID_MIN, Photos.ID_MAX);
+  for (let i = 0; i < Photos.NUMBER; i++) {
+    photos.push({
+      id: ids[i],
+      url: `photos/'${ids[i]}.jpg'`,
+      description: getRandomArrayElement(tempDescriptionss),
+      likes: getRandomInt(Likes.MIN, Likes.MAX),
+      comments: generateRandomComments(),
+    });
+  }
+  return photos;
+}
+const result = generateRandomPhotos();
+result; // for ESLint Validation
+// console.log(result);
+
+/* Another Solution
+
+const createNewArray = (arrLength, element, shift) => {
+  return new Array(arrLength).fill('').map((item, index) => element(index + shift));
+};
+
+const createComment = (index) => {
+  const commentMessageLength = getRandomNumber(1, 2);
+
+  const createCommentMessage = (length) => {
+    const result = [];
+    for (let i = 1; i <= length; i++) {
+      result.push(tempMessage[getRandomNumber(0, tempMessage.length - 1)]);
+    }
+    return result.join(' ');
+  };
+
+  return {
+    id: index + getRandomNumber(1, 300),
+    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
+    message: createCommentMessage(commentMessageLength),
+    name: tempNames[getRandomNumber(0, tempNames.length - 1)],
+  };
+};
+
+const createPhotoDescr = (index) => {
+  const arrayOfCommentsLength = getRandomNumber(1, MAX_COMMENTS_COUNT);
+  const createArrayOfComments = createNewArray(arrayOfCommentsLength, createComment, 0);
+
+  return {
+    id: index,
+    url: `photos/${index}.jpg`,
+    description: 'Еще одна фотография',
+    likes: getRandomNumber(15, 200),
+    comments: createArrayOfComments,
+  };
+};
+
+const arrayOfPhotoDescr = createNewArray(ARRAY_LENGTH, createPhotoDescr, 1);
+
+ */
