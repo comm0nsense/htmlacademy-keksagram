@@ -67,7 +67,6 @@ const getUniqueRandomNumbers = (length, min, max) => {
     const number = getRandomInt(min, max);
     if (arr.indexOf(number) === -1) arr.push(number);
   }
-  // console.log(arr);
   return arr;
 }
 
@@ -84,7 +83,6 @@ const getRandomMessages = (array, length) => {
   for (let i = 0; i < length; i++) {
     messages.push(getRandomArrayElement(array));
   }
-  // return messages;
   return messages.join(' ');
 }
 
@@ -120,46 +118,3 @@ let generateRandomPhotos = () => {
 }
 const result = generateRandomPhotos();
 result; // for ESLint Validation
-// console.log(result);
-
-/* Another Solution
-
-const createNewArray = (arrLength, element, shift) => {
-  return new Array(arrLength).fill('').map((item, index) => element(index + shift));
-};
-
-const createComment = (index) => {
-  const commentMessageLength = getRandomNumber(1, 2);
-
-  const createCommentMessage = (length) => {
-    const result = [];
-    for (let i = 1; i <= length; i++) {
-      result.push(tempMessage[getRandomNumber(0, tempMessage.length - 1)]);
-    }
-    return result.join(' ');
-  };
-
-  return {
-    id: index + getRandomNumber(1, 300),
-    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
-    message: createCommentMessage(commentMessageLength),
-    name: tempNames[getRandomNumber(0, tempNames.length - 1)],
-  };
-};
-
-const createPhotoDescr = (index) => {
-  const arrayOfCommentsLength = getRandomNumber(1, MAX_COMMENTS_COUNT);
-  const createArrayOfComments = createNewArray(arrayOfCommentsLength, createComment, 0);
-
-  return {
-    id: index,
-    url: `photos/${index}.jpg`,
-    description: 'Еще одна фотография',
-    likes: getRandomNumber(15, 200),
-    comments: createArrayOfComments,
-  };
-};
-
-const arrayOfPhotoDescr = createNewArray(ARRAY_LENGTH, createPhotoDescr, 1);
-
- */
