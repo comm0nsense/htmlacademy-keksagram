@@ -1,32 +1,32 @@
-import { getRandomInt, getRandomArrayElement, getUniqueRandomNumbers} from './util.js';
+import { getRandomInt, getRandomArrayElement, getUniqueRandomNumbers } from './util.js';
 // const MAX_LENGTH = 140;
-const Comments = {
-  NUMBER: 15,
-  ID_MIN: 1,
-  ID_MAX: 35,
-};
+// const Comments = {
+//   NUMBER: 15,
+//   ID_MIN: 1,
+//   ID_MAX: 35,
+// };
 
-const CommentMessage = {
-  MIN_LENGTH: 1,
-  MAX_LENGTH: 2,
-  NUMBER: 5,
-};
+// const CommentMessage = {
+//   MIN_LENGTH: 1,
+//   MAX_LENGTH: 2,
+//   NUMBER: 5,
+// };
 
-const AvatarPhotoNumber = {
-  MIN: 1,
-  MAX: 6,
-};
+// const AvatarPhotoNumber = {
+//   MIN: 1,
+//   MAX: 6,
+// };
 
-const Photos = {
-  NUMBER: 25,
-  ID_MIN: 1,
-  ID_MAX:25,
-};
+// const Photos = {
+//   NUMBER: 25,
+//   ID_MIN: 1,
+//   ID_MAX:25,
+// };
 
-const Likes = {
-  MIN: 15,
-  MAX: 200,
-}
+// const Likes = {
+//   MIN: 15,
+//   MAX: 200,
+// }
 
 const tempMessages = [
   'Всё отлично!',
@@ -47,18 +47,26 @@ const tempDescriptionss = [
 
 const names = ['Вася', 'Nik', 'Stella', 'Мария', 'Александр']
 
-const CommentMessageLength = getRandomInt(CommentMessage.MIN_LENGTH, CommentMessage.MAX_LENGTH);
+const CommentMessagesLength = {
+  MIN: 1,
+  MAX: 2,
+}
 
+const CommentsNumberRange = {
+  MIN: 1,
+  MAX: 15,
+}
+
+const CommentsIdRange = {
+  MIN: 1,
+  MAX: 250,
+}
 //Создает объекты с комментариями и помещает в массив
 const generateRandomComments = () => {
-  /**
-   * @param {array} array Массив из предложенний
-   * @param {number} length Сколько предложений будет в комментарии
-   * @returns {ыекштп} возвращает строку из заданного количества предложений
-   */
-  const getRandomMessages = (array, length) => {
-    let messages = [];
 
+  const getRandomMessages = (array) => {
+    let messages = [];
+    const length = getRandomInt(CommentMessagesLength.MIN, CommentMessagesLength.MAX);
     for (let i = 0; i < length; i++) {
       messages.push(getRandomArrayElement(array));
     }
@@ -66,14 +74,15 @@ const generateRandomComments = () => {
     return messages.join(' ');
   };
 
-  const ids = getUniqueRandomNumbers(Comments.NUMBER, Comments.ID_MIN, Comments.ID_MAX);
+  const commentsNumber = getRandomInt(CommentsNumberRange.MIN, CommentsNumberRange.MAX);
+  const commentIds = getUniqueRandomNumbers(commentsNumber, CommentsIdRange.MIN, CommentsIdRange.MAX);
   let comments = [];
 
-  for (let i = 0; i < CommentMessage.NUMBER; i++) {
+  for (let i = 0; i < commentsNumber; i++) {
     comments.push({
-      id: ids[i],
-      avatar: `img/avatar${getRandomInt(AvatarPhotoNumber.MIN, AvatarPhotoNumber.MAX)}.svg`,
-      message: getRandomMessages(tempMessages, CommentMessageLength),
+      id: commentIds[i],
+      avatar: `img/avatar${getRandomInt(1, 6)}.svg`,
+      message: getRandomMessages(tempMessages),
       name: getRandomArrayElement(names),
     });
   }
@@ -83,22 +92,26 @@ const generateRandomComments = () => {
 
 
 // Создает объекты с фото и помещает их в массив
-let generateRandomPhotos = () => {
+const generateRandomPhotos = () => {
   let photos = [];
-  const ids = getUniqueRandomNumbers(Photos.NUMBER, Photos.ID_MIN, Photos.ID_MAX);
+  const photoIds = getUniqueRandomNumbers(25, 1, 25);
 
-  for (let i = 0; i < Photos.NUMBER; i++) {
+  for (let i = 0; i < 25; i++) {
+    // console.log(i);
     photos.push({
-      id: ids[i],
-      url: `photos/'${ids[i]}.jpg'`,
+      id: photoIds[i],
+      url: `photos/${i + 1}.jpg`,
       description: getRandomArrayElement(tempDescriptionss),
-      likes: getRandomInt(Likes.MIN, Likes.MAX),
+      likes: getRandomInt(15, 200),
       comments: generateRandomComments(),
     });
   }
 
   return photos;
 };
+
+// const result = generateRandomPhotos();
+// console.log(result);
 
 export { generateRandomPhotos };
 
