@@ -1,15 +1,8 @@
 import { generateRandomPhotos } from './generate-mock-data.js';
 import { renderPreviews } from './render-previews.js';
 
-const photos = generateRandomPhotos();
+const photos = generateRandomPhotos(25);
 // console.log(photos);
-
-// for (let i = 0; i < photos.length; i++) {
-//   console.log(photos[i].tag);
-//   if (photos[i].tag === pictureTag) {
-//     const selectedPreview = photos[i].tag;
-//   }
-// }
 
 renderPreviews(photos);
 
@@ -21,12 +14,6 @@ const modalCloseButton = document.querySelector('.big-picture__cancel');
 
 
 const onPictureClick = (evt) => {
-  // console.log(evt);
-  // console.log(evt.path[1].childNodes[3]);
-
-  // console.log(bigPictureLikes.textContent);
-
-  // bigPictureImg.src = evt.target.src;
 
   const onModalEscPress = (evt) => {
     if (evt.key === ('Escape' || 'Esc')) {
@@ -66,18 +53,10 @@ const onPictureClick = (evt) => {
   if(evt.target.classList.contains('picture__img')) {
     evt.preventDefault();
     const pictureTag = evt.target.dataset.tag;
+    // console.log(typeof(pictureTag));
+    const selectedPreview = photos.find((photo) => photo.tag === Number(pictureTag) );
 
-    // console.log(pictureTag);
-
-    // for (let i = 0; i < photos.length; i++) {
-    //   // console.log(photos[i].tag);
-    //   if (photos[i].tag === pictureTag) {
-    //     console.log(photos[i].tag)
-    //     // const selectedPreview = photos[i].tag;
-    //     // console.log(selectedPreview)
-    //     }
-    // }
-    openModal( photos[pictureTag]);
+    openModal(selectedPreview);
   }
 };
 

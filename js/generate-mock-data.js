@@ -64,11 +64,11 @@ const generateRandomComments = () => {
 
 
 // Создает объекты с фото и помещает их в массив
-const generateRandomPhotos = () => {
+const generateRandomPhotos = (number) => {
   let photos = [];
   const photoIds = getUniqueRandomNumbers(25, 1, 25);
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < number; i++) {
     // console.log(i);
     photos.push({
       tag: i + 1,
