@@ -1,32 +1,4 @@
 import { getRandomInt, getRandomArrayElement, getUniqueRandomNumbers } from './util.js';
-// const MAX_LENGTH = 140;
-// const Comments = {
-//   NUMBER: 15,
-//   ID_MIN: 1,
-//   ID_MAX: 35,
-// };
-
-// const CommentMessage = {
-//   MIN_LENGTH: 1,
-//   MAX_LENGTH: 2,
-//   NUMBER: 5,
-// };
-
-// const AvatarPhotoNumber = {
-//   MIN: 1,
-//   MAX: 6,
-// };
-
-// const Photos = {
-//   NUMBER: 25,
-//   ID_MIN: 1,
-//   ID_MAX:25,
-// };
-
-// const Likes = {
-//   MIN: 15,
-//   MAX: 200,
-// }
 
 const tempMessages = [
   'Всё отлично!',
@@ -99,6 +71,7 @@ const generateRandomPhotos = () => {
   for (let i = 0; i < 25; i++) {
     // console.log(i);
     photos.push({
+      tag: i + 1,
       id: photoIds[i],
       url: `photos/${i + 1}.jpg`,
       description: getRandomArrayElement(tempDescriptionss),

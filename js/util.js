@@ -9,13 +9,6 @@ const checkStringLength = (string, length) => string.length <= length;
 checkStringLength; // for ESLint Validation
 
 
-/**
- *
- * @param {number} length
- * @param {number} min
- * @param {number} max
- * @returns {array} Массив из уникальных чисел в указанном диапазоне указанной длины
- */
 const getUniqueRandomNumbers = (length, min, max) => {
   let arr = [];
   while (arr.length < length) {
