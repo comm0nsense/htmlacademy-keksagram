@@ -53,7 +53,7 @@ const generateRandomComments = () => {
   for (let i = 0; i < commentsNumber; i++) {
     comments.push({
       id: commentIds[i],
-      avatar: `img/avatar${getRandomInt(1, 6)}.svg`,
+      avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
       message: getRandomMessages(tempMessages),
       name: getRandomArrayElement(names),
     });
